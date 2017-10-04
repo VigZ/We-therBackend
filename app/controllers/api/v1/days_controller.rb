@@ -15,6 +15,8 @@ class Api::V1::DaysController < ApplicationController
     pop: params[:pop],
     pref: params[:pref])
 
+
+
     render json: @day
   end
 
