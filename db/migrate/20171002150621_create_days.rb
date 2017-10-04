@@ -8,6 +8,9 @@ class CreateDays < ActiveRecord::Migration[5.1]
       t.string :low
       t.string :precipitation
       t.string :wind
+      t.string :current
+      t.string :pop
+      t.string :pref
       t.timestamps
     end
   end

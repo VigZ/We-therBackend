@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(version: 20171002150627) do
     t.string "low"
     t.string "precipitation"
     t.string "wind"
+    t.string "current"
+    t.string "pop"
+    t.string "pref"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
