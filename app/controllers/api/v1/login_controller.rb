@@ -69,46 +69,61 @@ class Api::V1::LoginController < ApplicationController
 
           #commenting d > 1 for now to see if session makes avail. ranges on login --
 
-        #   if (@days.length > 1){ # if they have more than one day -- inspect judge options
-        #
-        #     @dafters  = @days[-1..-1]     #saving days after first as a collection
-        #
-        #     @dafters.each{|day|
-        #           if (day.pref == "judge1"){ #if they are too warm -- adjust range -- rel. to suggestion
-        #
-        #
-        #           }
-        #
-        #         elsif (day.pref == "judge2"){ #if comfy
-        #
-        #
-        #         }
-        #
-        #       elsif (day.pref == "judge3"){ #if too cold -- adjust
-        #
-        #       }
-        #
-        #     } #end of it.
-        #
-        #
-        #   } #end of 2nd nested if
-        #
-        # end
+          if (@days.length > 1) # if they have more than one day -- inspect judge options
+
+            @dafters  = @days[-1..-1]     #saving days after first as a collection
+
+            @dafters.each do |day|
+                  if (day.pref == "judge1") #if they are too warm -- adjust range -- rel. to suggestion
+
+                    if  (@shlow <= day.current.to_i && day.current.to_i  <= @shhigh)
+                      @shlow -= 2.5
+                      @shigh -= 2.5
 
 
 
+                    elsif (@swlow <= day.current.to_i && day.current.to_i <= @swhigh)
+                      @swlow -= 2.5
+                      @swhigh -= 2.5
+
+                    elsif (@lslow <= day.current.to_i && day.current.to_i <= @lshigh)
+                      @lslow -= 2.5
+                      @lshigh -= 2.5
+
+                    end
+
+                elsif (day.pref == "judge3") #if too cold
+
+                  if  (@shlow <= day.current.to_i && day.current.to_i <= @shhigh)
+                    @shlow += 2.5
+                    @shhigh += 2.5
+
+
+                    @swlow = @shhigh + 1
+                    @swhigh = @swlow + 5
+
+                  elsif (@swlow <= day.current.to_i && day.current.to_i <= @swhigh)
+                    @swlow += 2.5
+                    @swhigh += 2.5
+
+                    @lslow = @swhigh + 1
+                    @lshigh = @lslow + 5
+
+                  elsif (@lslow <= day.current.to_i && day.current.to_i <= @lshigh)
+                    @lslow += 2.5
+                    @lshigh += 2.5
+
+
+
+                  end
+
+              end
+        end # ends do
+
+
+      end # ends if days > 1
 
   end #ending larger if
-
-
-
-
-
-
-
-
-
-
 
 
     # @days.all{|day| (day.current)/(day.pref)
@@ -135,4 +150,5 @@ class Api::V1::LoginController < ApplicationController
     render json: @session, status: 200
 
   end
+
 end
