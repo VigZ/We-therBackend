@@ -6,7 +6,7 @@ class Api::V1::LoginController < ApplicationController
 
     @days = @user.days
 
-
+    #need to add to user db
     #creating vars for user range
     @shlow = 0
     @shhigh = 0
@@ -78,7 +78,7 @@ class Api::V1::LoginController < ApplicationController
 
                     if  (@shlow <= day.current.to_i && day.current.to_i  <= @shhigh)
                       @shlow -= 2.5
-                      @shigh -= 2.5
+                      @shigh += 2.5
 
 
 
@@ -99,14 +99,14 @@ class Api::V1::LoginController < ApplicationController
                     @shhigh += 2.5
 
 
-                    @swlow = @shhigh + 1
+                    @swlow = @shhigh + 3
                     @swhigh = @swlow + 5
 
                   elsif (@swlow <= day.current.to_i && day.current.to_i <= @swhigh)
                     @swlow += 2.5
                     @swhigh += 2.5
 
-                    @lslow = @swhigh + 1
+                    @lslow = @swhigh + 3
                     @lshigh = @lslow + 5
 
                   elsif (@lslow <= day.current.to_i && day.current.to_i <= @lshigh)
